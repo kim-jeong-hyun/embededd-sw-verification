@@ -41,7 +41,7 @@ common/
 
 ## Goal
 
-본 저장소의 목표는 단순히 프로그램을 개발하는 것이 아닌닌
+본 저장소의 목표는 단순히 프로그램을 개발하는 것이 아닌
 
 - 요구사항 기반 검증(Requirement-Based Verification)
 - 테스트 케이스 설계(Test Case Design)
