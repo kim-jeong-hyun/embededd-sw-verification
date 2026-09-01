@@ -20,7 +20,7 @@ Embedded Power Manager는 입력 조건을 기반으로 시스템의 전원 상�
     - Fault Flag
     - Timer
 
-'''text
+```text
 Input
    │
    ▼
@@ -28,7 +28,7 @@ Embedded Power Manager
    │
    ▼
 Output
-'''
+```
 
 ### Output
 - System State
