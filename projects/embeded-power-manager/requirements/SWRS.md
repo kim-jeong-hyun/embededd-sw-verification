@@ -32,7 +32,7 @@
 - IGN Signal이 ON에서 OFF로 변경되면 Sleep Timer를 시작해야 한다.
 
 #### REQ-EPM-006
-- Sleep Timer가 만료되면 SLEEP 상태로 전환해야 한다.
+- Sleep Timer가 30초 대기 후 SLEEP 상태로 전환해야 한다.
 
 ---
 
