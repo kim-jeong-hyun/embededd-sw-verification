@@ -64,7 +64,7 @@
 #### REQ-EPM-012
 - Battery Fault, CAN Timeout 또는 Internal Fault가 발생하면 FAULT 상태로 전환해야 한다.
 
-#### REQ-EPM-012
+#### REQ-EPM-013
 - Fault Reset 조건을 만족하면 INIT 상태로 전환해야 한다.
 
 ---
