@@ -7,14 +7,14 @@
                  | POWER_OFF   |
                  +-------------+
                         |
-                 IGN ON / Wake-up
+             IGN ON / Wake-up
                         |
                         ▼
                  +-------------+
                  |    INIT     |
                  +-------------+
                         |
-              Initialization Success
+          Initialization Success
                         |
                         ▼
                  +-------------+
@@ -23,36 +23,42 @@
                   |     |     |
                   |     |     |
        Battery    |     | IGN OFF
-       Low        |     | Timer Start
+       Low        |     |
                   |     ▼
-                  |  +--------+
-                  |  | SLEEP  |
-                  |  +--------+
-                  |      |
+                  |  +-------------+
+                  |  |   SLEEP     |
+                  |  +-------------+
+                  |     |       |
+                  |     |       | 30초 경과
+                  |     |       ▼
+                  |     |  +-------------+
+                  |     |  | POWER_OFF   |
+                  |     |  +-------------+
+                  |     |
                   | Wake-up
-                  |      ▼
+                  |     ▼
                   |    INIT
                   ▼
             +-------------+
             | LOW_POWER   |
             +-------------+
                   |
-       Battery Voltage Recovery
+      Battery Voltage Recovery
                   |
                   ▼
                ACTIVE
 
-Fault 발생
-    │
-    ▼
-+-------------+
-|   FAULT     |
-+-------------+
-      |
- Fault Reset
-      |
-      ▼
-    INIT
+                  Fault 발생
+                      │
+                      ▼
+               +-------------+
+               |   FAULT     |
+               +-------------+
+                      |
+                Fault Reset
+                      |
+                      ▼
+                    INIT
 ```
 
 ---
@@ -60,16 +66,15 @@ Fault 발생
 ## 2. State Description
 
 ### 2.1 POWER OFF
-- 시스템의 기본 대기 상태이다.
+- 시스템 전원이 차단된 상태이다. 
 
 #### Entry Condition
-- 시스템 초기 전원 인가
-- Shutdown 완료
+- SLEEP 상태에서 30초가 경과하여 시스템 전원이 차단된 경우
 
 #### Exit Condition
 - IGN Signal ON
-- Wake up Signal
-- CAN Wake up Request
+- Wake up Signal 감지
+- CAN Wake up Request 수신
 
 ### 2.2 INIT
 - 시스템 초기화를 수행하는 상태이다.
@@ -77,8 +82,8 @@ Fault 발생
 #### Entry Condition
 - POWER OFF 상태에서 IGN Signal ON
 - Wake Up Signal
-- CAN Wake Up Signal
-- Fault Recovery
+- CAN Wake Up Request 수신
+- FAULT 상태에서 Fault Reset 완료
 
 #### Exit Condition
 - Initialization 완료
@@ -91,5 +96,5 @@ Fault 발생
 
 #### Exit Condition
 - Battery Voltage Low
-- IGN OFF
+- IGN Signal OFF
 - Fault 발생
