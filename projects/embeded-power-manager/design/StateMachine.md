@@ -7,14 +7,14 @@
                  | POWER_OFF   |
                  +-------------+
                         |
-             IGN ON / Wake-up
+                     IGN ON 
                         |
                         ▼
                  +-------------+
                  |    INIT     |
                  +-------------+
                         |
-          Initialization Success
+               Initialization Success
                         |
                         ▼
                  +-------------+
@@ -26,21 +26,21 @@
        Low        |     |
                   |     ▼
                   |  +-------------+
-                  |  |   SLEEP     |
+                  |  |    SLEEP    |
                   |  +-------------+
                   |     |       |
                   |     |       | 30초 경과
                   |     |       ▼
                   |     |  +-------------+
-                  |     |  | POWER_OFF   |
+                  |     |  |  POWER_OFF  |
                   |     |  +-------------+
                   |     |
-                  | Wake-up
+                  |  Wake-up
                   |     ▼
                   |    INIT
                   ▼
             +-------------+
-            | LOW_POWER   |
+            |  LOW_POWER  |
             +-------------+
                   |
       Battery Voltage Recovery
@@ -55,7 +55,7 @@
                |   FAULT     |
                +-------------+
                       |
-                Fault Reset
+                 Fault Reset
                       |
                       ▼
                     INIT
