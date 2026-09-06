@@ -42,6 +42,7 @@
               |     Sleep Request     |
               |   Diagnostic Status   |
               +-----------------------+
+              
 ### 2.2 Module Description
 - Power Manager는 입력 신호를 기반으로 시스템 상태를 관리한다.
 - 상태 변경에 따라 주변 장치 전원을 제어한다.
