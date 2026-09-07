@@ -36,6 +36,7 @@ void PowerManager::Update()
             if(initFinished)
             {
                 currentState = PowerState::ACTIVE;
+                initFinished = false; // 초기화 완료 후 플래그 초기화  
             }
             break;
         case PowerState::ACTIVE:
