@@ -12,6 +12,7 @@ PowerManager::PowerManager()
     internalFault = false;
 
     sleepTimer = 0;
+    initFinished = false;
 }
 
 // 상태 초기화
@@ -26,8 +27,16 @@ void PowerManager::Update()
     switch (currentState)
     {
         case PowerState::POWER_OFF:
+            if(ignSignal)
+            {
+                currentState = PowerState::INIT;
+            }
             break;
         case PowerState::INIT:
+            if(initFinished)
+            {
+                currentState = PowerState::ACTIVE;
+            }
             break;
         case PowerState::ACTIVE:
             break;  
@@ -86,3 +95,8 @@ PowerState PowerManager::GetPowerState() const
     return currentState;
 }
 
+// 초기화 완료 설정
+void PowerManager::SetInitFinished(bool finished)
+{
+    initFinished = finished;
+}

@@ -21,6 +21,7 @@ class PowerManager {
 
         PowerState GetPowerState() const;
 
+        void SetInitFinished(bool finished);
     private:
         PowerState currentState;
 
@@ -34,6 +35,8 @@ class PowerManager {
         bool internalFault;
 
         uint32_t sleepTimer;
+
+        bool initFinished;
 };
 
 #endif // POWERMANAGER_H
