@@ -33,7 +33,7 @@ class PowerManager {
         bool canTimeout;
         bool internalFault;
 
-        std::uint32_t sleepTimer;
+        uint32_t sleepTimer;
 };
 
 #endif // POWERMANAGER_H
