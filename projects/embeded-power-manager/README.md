@@ -46,7 +46,7 @@ traceability/   # 요구사항 추적성
 - [x] Project Planning
 - [x] Repository Structure
 - [x] Requirement Specification
-- [ ] Software Design
+- [x] Software Design
 - [ ] Implementation
 - [ ] Unit Test
 - [ ] Traceability
