@@ -22,7 +22,11 @@ class PowerManager {
         PowerState GetPowerState() const;
 
         void SetInitFinished(bool finished);
+
+        bool GetPeripheralPowerEnable() const;
+        
     private:
+        //시스템 전원 상태 관리 변수
         PowerState currentState;
 
         bool ignSignal;
@@ -38,6 +42,11 @@ class PowerManager {
 
         bool initFinished;
 
+        // 주변 장치 제어 변수
+        bool peripheralPowerEnable;
+        bool cameraPowerEnable;
+
+        //타이머 및 시간 관련 상수
         static constexpr uint32_t TASK_PERIOD_MS = 10;          //10ms
         static constexpr uint32_t SLEEP_TIMEOUT_MS = 30*1000;   //30초
 };

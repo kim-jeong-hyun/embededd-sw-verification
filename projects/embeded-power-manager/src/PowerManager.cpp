@@ -13,6 +13,9 @@ PowerManager::PowerManager()
 
     sleepTimer = 0;
     initFinished = false;
+
+    peripheralPowerEnable = false;
+    cameraPowerEnable = false;
 }
 
 // 상태 초기화
@@ -40,6 +43,9 @@ void PowerManager::Update()
         }
         break;
     case PowerState::ACTIVE:
+        peripheralPowerEnable = true; // 주변 장치 전원 활성화
+        cameraPowerEnable = true;     // 카메라 전원 활성화
+
         if (batVoltage >= 10.0f && batVoltage < 11.5f)
         {
             currentState = PowerState::LOW_POWER;
@@ -50,12 +56,18 @@ void PowerManager::Update()
         }
         break;
     case PowerState::LOW_POWER:
+        peripheralPowerEnable = true;
+        cameraPowerEnable = false;
+
         if (batVoltage >= 11.5f)
         {
             currentState = PowerState::ACTIVE;
         }
         break;
     case PowerState::SLEEP:
+        peripheralPowerEnable = false;
+        cameraPowerEnable = false;
+
         if (wakeupSignal || ignSignal)
         {
             currentState = PowerState::INIT;
@@ -72,6 +84,8 @@ void PowerManager::Update()
         }
         break;
     case PowerState::FAULT:
+        peripheralPowerEnable = false;
+        cameraPowerEnable = false;
         break;
     default:
         break;
@@ -126,4 +140,10 @@ PowerState PowerManager::GetPowerState() const
 void PowerManager::SetInitFinished(bool finished)
 {
     initFinished = finished;
+}
+
+// 주변 장치 제어 상태 반환
+bool PowerManager::GetPeripheralPowerEnable() const
+{
+    return peripheralPowerEnable;
 }
