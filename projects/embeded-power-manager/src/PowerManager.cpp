@@ -30,12 +30,18 @@ void PowerManager::Update()
     switch (currentState)
     {
     case PowerState::POWER_OFF:
+        peripheralPowerEnable = false;
+        cameraPowerEnable = false;
+
         if (ignSignal)
         {
             currentState = PowerState::INIT;
         }
         break;
     case PowerState::INIT:
+        peripheralPowerEnable = false;
+        cameraPowerEnable = false;
+
         if (initFinished)
         {
             currentState = PowerState::ACTIVE;
@@ -146,4 +152,10 @@ void PowerManager::SetInitFinished(bool finished)
 bool PowerManager::GetPeripheralPowerEnable() const
 {
     return peripheralPowerEnable;
+}
+
+// 카메라 전원 제어 상태 반환(일부 장치 제한용)
+bool PowerManager::GetCameraPowerEnable() const
+{
+    return cameraPowerEnable;
 }

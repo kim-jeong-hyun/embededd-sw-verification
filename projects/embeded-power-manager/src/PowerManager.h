@@ -24,7 +24,7 @@ class PowerManager {
         void SetInitFinished(bool finished);
 
         bool GetPeripheralPowerEnable() const;
-        
+        bool GetCameraPowerEnable() const;
     private:
         //시스템 전원 상태 관리 변수
         PowerState currentState;
