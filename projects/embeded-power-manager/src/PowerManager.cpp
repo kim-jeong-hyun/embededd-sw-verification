@@ -2,6 +2,12 @@
 
 PowerManager::PowerManager()
 {
+    Init();
+}
+
+// 상태 초기화
+void PowerManager::Init()
+{
     currentState = PowerState::POWER_OFF;
 
     ignSignal = false;
@@ -16,17 +22,15 @@ PowerManager::PowerManager()
 
     peripheralPowerEnable = false;
     cameraPowerEnable = false;
-}
 
-// 상태 초기화
-void PowerManager::Init()
-{
-    currentState = PowerState::INIT;
+    canMessageId = CanMessageId::NONE;
 }
 
 // 상태 업데이트
 void PowerManager::Update()
 {
+    ProcessCanMessage(); // CAN 메시지 처리
+
     switch (currentState)
     {
     case PowerState::POWER_OFF:
@@ -59,6 +63,7 @@ void PowerManager::Update()
         else if (!ignSignal)
         {
             currentState = PowerState::SLEEP;
+            sleepTimer = 0;
         }
         break;
     case PowerState::LOW_POWER:
@@ -117,9 +122,26 @@ void PowerManager::SetBatteryVoltage(float voltage)
 }
 
 // CAN 메시지 수신
-void PowerManager::RecvCanMessage(uint32_t messageId)
+void PowerManager::RecvCanMessage(CanMessageId messageId)
 {
-    // CAN 메시지 처리 로직 구현
+    canMessageId = messageId;
+}
+
+// CAN 메시지 처리
+void PowerManager::ProcessCanMessage()
+{
+    switch (canMessageId)
+    {
+    case CanMessageId::WAKEUP_REQUEST:
+        break;
+    case CanMessageId::SLEEP_REQUEST:
+        break;
+    case CanMessageId::RESET_FAULT:
+        break;
+    default:
+        break;
+    }
+    canMessageId = CanMessageId::NONE; // 메시지 처리 후 초기화 
 }
 
 // 내부 진단 설정

@@ -8,24 +8,26 @@ class PowerManager {
     public:
         PowerManager();
 
-        void Init();
         void Update();
-
+        
         void SetIgnSignal(bool on);
         void SetWakeupSignal(bool on);
         void SetBatteryVoltage(float voltage);
-        void RecvCanMessage(uint32_t messageId);
-
+        void RecvCanMessage(CanMessageId messageId);
+        void ProcessCanMessage();
         void SetInternalFault(bool fault);
         void ClearFault();
-
+        
         PowerState GetPowerState() const;
 
         void SetInitFinished(bool finished);
 
         bool GetPeripheralPowerEnable() const;
         bool GetCameraPowerEnable() const;
+        
     private:
+        void Init();
+
         //시스템 전원 상태 관리 변수
         PowerState currentState;
 
@@ -45,6 +47,9 @@ class PowerManager {
         // 주변 장치 제어 변수
         bool peripheralPowerEnable;
         bool cameraPowerEnable;
+
+        // CAN message ID
+        CanMessageId canMessageId;
 
         //타이머 및 시간 관련 상수
         static constexpr uint32_t TASK_PERIOD_MS = 10;          //10ms

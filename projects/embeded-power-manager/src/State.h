@@ -9,3 +9,10 @@ enum class PowerState {
     FAULT
 };
 
+enum class CanMessageId : uint32_t 
+{
+    NONE                = 0x000,  
+    WAKEUP_REQUEST      = 0x100,
+    SLEEP_REQUEST       = 0x101,
+    RESET_FAULT         = 0x102
+};
