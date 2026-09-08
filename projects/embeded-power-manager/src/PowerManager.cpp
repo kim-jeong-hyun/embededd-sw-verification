@@ -40,8 +40,20 @@ void PowerManager::Update()
             }
             break;
         case PowerState::ACTIVE:
-            break;  
+            if(batVoltage >=10.0f && batVoltage < 11.5f)
+            {
+                currentState = PowerState::LOW_POWER;
+            }
+            else if (!ignSignal)
+            {
+                currentState = PowerState::SLEEP;
+            }
+            break;
         case PowerState::LOW_POWER:
+            if(batVoltage >= 11.5f)
+            {
+                currentState = PowerState::ACTIVE;
+            }
             break;
         case PowerState::SLEEP:
             break;
