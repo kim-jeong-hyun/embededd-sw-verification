@@ -37,6 +37,9 @@ class PowerManager {
         uint32_t sleepTimer;
 
         bool initFinished;
+
+        static constexpr uint32_t TASK_PERIOD_MS = 10;          //10ms
+        static constexpr uint32_t SLEEP_TIMEOUT_MS = 30*1000;   //30초
 };
 
 #endif // POWERMANAGER_H

@@ -26,41 +26,55 @@ void PowerManager::Update()
 {
     switch (currentState)
     {
-        case PowerState::POWER_OFF:
-            if(ignSignal)
+    case PowerState::POWER_OFF:
+        if (ignSignal)
+        {
+            currentState = PowerState::INIT;
+        }
+        break;
+    case PowerState::INIT:
+        if (initFinished)
+        {
+            currentState = PowerState::ACTIVE;
+            initFinished = false; // 초기화 완료 후 플래그 초기화
+        }
+        break;
+    case PowerState::ACTIVE:
+        if (batVoltage >= 10.0f && batVoltage < 11.5f)
+        {
+            currentState = PowerState::LOW_POWER;
+        }
+        else if (!ignSignal)
+        {
+            currentState = PowerState::SLEEP;
+        }
+        break;
+    case PowerState::LOW_POWER:
+        if (batVoltage >= 11.5f)
+        {
+            currentState = PowerState::ACTIVE;
+        }
+        break;
+    case PowerState::SLEEP:
+        if (wakeupSignal || ignSignal)
+        {
+            currentState = PowerState::INIT;
+            sleepTimer = 0;
+        }
+        else
+        {
+            sleepTimer += TASK_PERIOD_MS;
+            if (sleepTimer >= SLEEP_TIMEOUT_MS)
             {
-                currentState = PowerState::INIT;
+                currentState = PowerState::POWER_OFF;
+                sleepTimer = 0;
             }
-            break;
-        case PowerState::INIT:
-            if(initFinished)
-            {
-                currentState = PowerState::ACTIVE;
-                initFinished = false; // 초기화 완료 후 플래그 초기화  
-            }
-            break;
-        case PowerState::ACTIVE:
-            if(batVoltage >=10.0f && batVoltage < 11.5f)
-            {
-                currentState = PowerState::LOW_POWER;
-            }
-            else if (!ignSignal)
-            {
-                currentState = PowerState::SLEEP;
-            }
-            break;
-        case PowerState::LOW_POWER:
-            if(batVoltage >= 11.5f)
-            {
-                currentState = PowerState::ACTIVE;
-            }
-            break;
-        case PowerState::SLEEP:
-            break;
-        case PowerState::FAULT:
-            break;
-        default:
-            break;
+        }
+        break;
+    case PowerState::FAULT:
+        break;
+    default:
+        break;
     }
 }
 
