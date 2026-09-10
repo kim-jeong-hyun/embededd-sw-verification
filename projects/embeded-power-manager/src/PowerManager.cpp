@@ -56,7 +56,11 @@ void PowerManager::Update()
         peripheralPowerEnable = true; // 주변 장치 전원 활성화
         cameraPowerEnable = true;     // 카메라 전원 활성화
 
-        if (batVoltage >= 10.0f && batVoltage < 11.5f)
+        if (internalFault)
+        {
+            currentState = PowerState::FAULT;        
+        }
+        else if (batVoltage >= 10.0f && batVoltage < 11.5f)
         {
             currentState = PowerState::LOW_POWER;
         }
