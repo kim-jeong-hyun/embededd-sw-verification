@@ -13,6 +13,7 @@ class PowerManager {
         void SetIgnSignal(bool on);
         void SetWakeupSignal(bool on);
         void SetBatteryVoltage(float voltage);
+        void SetCanTimeout(bool timeout);
         void RecvCanMessage(CanMessageId messageId);
         void ProcessCanMessage();
         void SetInternalFault(bool fault);
@@ -32,7 +33,7 @@ class PowerManager {
         PowerState currentState;
 
         bool ignSignalOnOff;
-        bool wakeupSignalOnOff;
+        bool isWakeupRequested;
 
         float batVoltage;
 
@@ -54,6 +55,10 @@ class PowerManager {
         //타이머 및 시간 관련 상수
         static constexpr uint32_t TASK_PERIOD_MS = 10;          //10ms
         static constexpr uint32_t SLEEP_TIMEOUT_MS = 30*1000;   //30초
+
+        //배터리 전압 관련 상수
+        static constexpr float BATTERY_FAULT_THRESHOLD  = 10.0f; //배터리 전압 임계값
+        static constexpr float LOW_BATTERY_THRESHOLD  = 11.5f; //배터리 전압 회복 임계값
 };
 
 #endif // POWERMANAGER_H

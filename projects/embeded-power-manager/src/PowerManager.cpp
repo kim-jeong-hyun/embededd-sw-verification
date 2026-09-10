@@ -11,7 +11,7 @@ void PowerManager::Init()
     currentState = PowerState::POWER_OFF;
 
     ignSignalOnOff = false;
-    wakeupSignalOnOff = false;
+    isWakeupRequested = false;
     batVoltage = 0.0f;
     isBatteryFault = false;
     isCanTimeout = false;
@@ -58,9 +58,9 @@ void PowerManager::Update()
 
         if (isBatteryFault || isCanTimeout || isInternalFault)
         {
-            currentState = PowerState::FAULT;        
+            currentState = PowerState::FAULT;
         }
-        else if (batVoltage >= 10.0f && batVoltage < 11.5f)
+        else if (batVoltage >= BATTERY_FAULT_THRESHOLD && batVoltage < LOW_BATTERY_THRESHOLD)
         {
             currentState = PowerState::LOW_POWER;
         }
@@ -76,9 +76,9 @@ void PowerManager::Update()
 
         if (isBatteryFault || isCanTimeout || isInternalFault)
         {
-            currentState = PowerState::FAULT;        
+            currentState = PowerState::FAULT;
         }
-        else if (batVoltage >= 11.5f)
+        else if (batVoltage >= LOW_BATTERY_THRESHOLD)
         {
             currentState = PowerState::ACTIVE;
         }
@@ -86,11 +86,14 @@ void PowerManager::Update()
     case PowerState::SLEEP:
         isPeripheralPowerEnable = false;
         isCameraPowerEnable = false;
+
         // GPIO, Wake Pin 등의 H/W Wake up 신호 감지 시 INIT 상태로 전환
-        if (wakeupSignalOnOff || ignSignalOnOff)
+        if (isWakeupRequested || ignSignalOnOff)
         {
             currentState = PowerState::INIT;
             sleepTimer = 0;
+
+            isWakeupRequested = false; // Wakeup 신호 처리 후 초기화
         }
         else
         {
@@ -120,13 +123,24 @@ void PowerManager::SetIgnSignal(bool on)
 // WAKEUP 신호 설정
 void PowerManager::SetWakeupSignal(bool on)
 {
-    wakeupSignalOnOff = on;
+    isWakeupRequested = on;
 }
 
 // 배터리 전압 설정
 void PowerManager::SetBatteryVoltage(float voltage)
 {
     batVoltage = voltage;
+
+    if(batVoltage < BATTERY_FAULT_THRESHOLD)
+    {
+        isBatteryFault = true;
+    }
+}
+
+// CAN Timeout 설정
+void PowerManager::SetCanTimeout(bool timeout)
+{
+    isCanTimeout = timeout;
 }
 
 // CAN 메시지 수신
@@ -145,7 +159,7 @@ void PowerManager::ProcessCanMessage()
         if (currentState == PowerState::POWER_OFF || currentState == PowerState::SLEEP)
         {
             currentState = PowerState::INIT;
-            sleepTimer = 0; 
+            sleepTimer = 0;
         }
         break;
     case CanMessageId::SLEEP_REQUEST:
@@ -161,7 +175,7 @@ void PowerManager::ProcessCanMessage()
     default:
         break;
     }
-    canMessageId = CanMessageId::NONE; // 메시지 처리 후 초기화 
+    canMessageId = CanMessageId::NONE; // 메시지 처리 후 초기화
 }
 
 // 내부 진단 설정
