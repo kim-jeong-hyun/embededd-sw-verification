@@ -74,7 +74,11 @@ void PowerManager::Update()
         isPeripheralPowerEnable = true;
         isCameraPowerEnable = false;
 
-        if (batVoltage >= 11.5f)
+        if (isBatteryFault || isCanTimeout || isInternalFault)
+        {
+            currentState = PowerState::FAULT;        
+        }
+        else if (batVoltage >= 11.5f)
         {
             currentState = PowerState::ACTIVE;
         }
