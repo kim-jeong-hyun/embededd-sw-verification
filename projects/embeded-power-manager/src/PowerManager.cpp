@@ -78,7 +78,7 @@ void PowerManager::Update()
     case PowerState::SLEEP:
         peripheralPowerEnable = false;
         cameraPowerEnable = false;
-
+        // GPIO, Wake Pin 등의 H/W Wake up 신호 감지 시 INIT 상태로 전환
         if (wakeupSignal || ignSignal)
         {
             currentState = PowerState::INIT;
@@ -133,10 +133,22 @@ void PowerManager::ProcessCanMessage()
     switch (canMessageId)
     {
     case CanMessageId::WAKEUP_REQUEST:
+        // Wake up Signal | Can Wakeup Request INIT 상태로 전환
+        if (currentState == PowerState::POWER_OFF || currentState == PowerState::SLEEP)
+        {
+            currentState = PowerState::INIT;
+            sleepTimer = 0; 
+        }
         break;
     case CanMessageId::SLEEP_REQUEST:
         break;
     case CanMessageId::RESET_FAULT:
+        // Fault 조건 해제 시 INIT 상태로 전환
+        if (currentState == PowerState::FAULT)
+        {
+            ClearFault();
+            currentState = PowerState::INIT;
+        }
         break;
     default:
         break;
