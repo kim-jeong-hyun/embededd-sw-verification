@@ -31,22 +31,22 @@ class PowerManager {
         //시스템 전원 상태 관리 변수
         PowerState currentState;
 
-        bool ignSignal;
-        bool wakeupSignal;
+        bool ignSignalOnOff;
+        bool wakeupSignalOnOff;
 
         float batVoltage;
 
-        bool batteryFault;
-        bool canTimeout;
-        bool internalFault;
+        bool isBatteryFault;
+        bool isCanTimeout;
+        bool isInternalFault;
 
         uint32_t sleepTimer;
 
-        bool initFinished;
+        bool isInitFinished;
 
         // 주변 장치 제어 변수
-        bool peripheralPowerEnable;
-        bool cameraPowerEnable;
+        bool isPeripheralPowerEnable;
+        bool isCameraPowerEnable;
 
         // CAN message ID
         CanMessageId canMessageId;

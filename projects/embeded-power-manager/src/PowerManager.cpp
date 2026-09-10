@@ -10,18 +10,18 @@ void PowerManager::Init()
 {
     currentState = PowerState::POWER_OFF;
 
-    ignSignal = false;
-    wakeupSignal = false;
+    ignSignalOnOff = false;
+    wakeupSignalOnOff = false;
     batVoltage = 0.0f;
-    batteryFault = false;
-    canTimeout = false;
-    internalFault = false;
+    isBatteryFault = false;
+    isCanTimeout = false;
+    isInternalFault = false;
 
     sleepTimer = 0;
-    initFinished = false;
+    isInitFinished = false;
 
-    peripheralPowerEnable = false;
-    cameraPowerEnable = false;
+    isPeripheralPowerEnable = false;
+    isCameraPowerEnable = false;
 
     canMessageId = CanMessageId::NONE;
 }
@@ -34,29 +34,29 @@ void PowerManager::Update()
     switch (currentState)
     {
     case PowerState::POWER_OFF:
-        peripheralPowerEnable = false;
-        cameraPowerEnable = false;
+        isPeripheralPowerEnable = false;
+        isCameraPowerEnable = false;
 
-        if (ignSignal)
+        if (ignSignalOnOff)
         {
             currentState = PowerState::INIT;
         }
         break;
     case PowerState::INIT:
-        peripheralPowerEnable = false;
-        cameraPowerEnable = false;
+        isPeripheralPowerEnable = false;
+        isCameraPowerEnable = false;
 
-        if (initFinished)
+        if (isInitFinished)
         {
             currentState = PowerState::ACTIVE;
-            initFinished = false; // 초기화 완료 후 플래그 초기화
+            isInitFinished = false; // 초기화 완료 후 플래그 초기화
         }
         break;
     case PowerState::ACTIVE:
-        peripheralPowerEnable = true; // 주변 장치 전원 활성화
-        cameraPowerEnable = true;     // 카메라 전원 활성화
+        isPeripheralPowerEnable = true; // 주변 장치 전원 활성화
+        isCameraPowerEnable = true;     // 카메라 전원 활성화
 
-        if (internalFault)
+        if (isBatteryFault || isCanTimeout || isInternalFault)
         {
             currentState = PowerState::FAULT;        
         }
@@ -64,15 +64,15 @@ void PowerManager::Update()
         {
             currentState = PowerState::LOW_POWER;
         }
-        else if (!ignSignal)
+        else if (!ignSignalOnOff)
         {
             currentState = PowerState::SLEEP;
             sleepTimer = 0;
         }
         break;
     case PowerState::LOW_POWER:
-        peripheralPowerEnable = true;
-        cameraPowerEnable = false;
+        isPeripheralPowerEnable = true;
+        isCameraPowerEnable = false;
 
         if (batVoltage >= 11.5f)
         {
@@ -80,10 +80,10 @@ void PowerManager::Update()
         }
         break;
     case PowerState::SLEEP:
-        peripheralPowerEnable = false;
-        cameraPowerEnable = false;
+        isPeripheralPowerEnable = false;
+        isCameraPowerEnable = false;
         // GPIO, Wake Pin 등의 H/W Wake up 신호 감지 시 INIT 상태로 전환
-        if (wakeupSignal || ignSignal)
+        if (wakeupSignalOnOff || ignSignalOnOff)
         {
             currentState = PowerState::INIT;
             sleepTimer = 0;
@@ -99,8 +99,8 @@ void PowerManager::Update()
         }
         break;
     case PowerState::FAULT:
-        peripheralPowerEnable = false;
-        cameraPowerEnable = false;
+        isPeripheralPowerEnable = false;
+        isCameraPowerEnable = false;
         break;
     default:
         break;
@@ -110,13 +110,13 @@ void PowerManager::Update()
 // IGN 신호 설정
 void PowerManager::SetIgnSignal(bool on)
 {
-    ignSignal = on;
+    ignSignalOnOff = on;
 }
 
 // WAKEUP 신호 설정
 void PowerManager::SetWakeupSignal(bool on)
 {
-    wakeupSignal = on;
+    wakeupSignalOnOff = on;
 }
 
 // 배터리 전압 설정
@@ -163,15 +163,15 @@ void PowerManager::ProcessCanMessage()
 // 내부 진단 설정
 void PowerManager::SetInternalFault(bool fault)
 {
-    internalFault = fault;
+    isInternalFault = fault;
 }
 
 // 내부 진단 해제
 void PowerManager::ClearFault()
 {
-    batteryFault = false;
-    canTimeout = false;
-    internalFault = false;
+    isBatteryFault = false;
+    isCanTimeout = false;
+    isInternalFault = false;
 }
 
 // 현재 전원 상태 반환
@@ -183,17 +183,17 @@ PowerState PowerManager::GetPowerState() const
 // 초기화 완료 설정
 void PowerManager::SetInitFinished(bool finished)
 {
-    initFinished = finished;
+    isInitFinished = finished;
 }
 
 // 주변 장치 제어 상태 반환
 bool PowerManager::GetPeripheralPowerEnable() const
 {
-    return peripheralPowerEnable;
+    return isPeripheralPowerEnable;
 }
 
 // 카메라 전원 제어 상태 반환(일부 장치 제한용)
 bool PowerManager::GetCameraPowerEnable() const
 {
-    return cameraPowerEnable;
+    return isCameraPowerEnable;
 }
