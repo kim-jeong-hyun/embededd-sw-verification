@@ -45,6 +45,9 @@ void SimulationInput(PowerManager &pm, uint32_t tick)
         // Wakeup Signal OFF
         pm.SetWakeupSignal(false);
         break;
+    case 3520:
+        pm.SetInitFinished(true);
+        break;
     default:
         break;
     }
@@ -58,7 +61,8 @@ int main()
 
     PowerState prevState = pm.GetPowerState();
 
-    while (true)
+    // 60초만 실행하고 종료
+    while (tick <= 6000)
     {
         SimulationInput(pm, tick);
 
@@ -66,15 +70,16 @@ int main()
 
         if (prevState != pm.GetPowerState())
         {
-            std::cout 
-            << "[Tick: " << tick << "] " 
-            << pm.GetPowerStateString() 
-            << " | Battery Voltage: " << pm.GetBatteryVoltage()
-            << " | Peripheral Power: " << std::boolalpha << pm.GetPeripheralPowerEnable()
-            << " | Camera : " << std::boolalpha << pm.GetCameraPowerEnable()
-            << std::endl;
+            std::cout
+                << "[Tick: " << tick << "] "
+                << pm.GetPowerStateString()
+                << " | Battery Voltage: " << pm.GetBatteryVoltage()
+                << " | Peripheral Power: " << std::boolalpha << pm.GetPeripheralPowerEnable()
+                << " | Camera : " << std::boolalpha << pm.GetCameraPowerEnable()
+                << std::endl;
             prevState = pm.GetPowerState();
         }
+        //메인 스레드 10ms 대기
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
         tick++;
     }
