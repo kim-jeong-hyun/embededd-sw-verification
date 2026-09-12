@@ -66,10 +66,10 @@ Embedded Power Manager는 다음과 같은 기능을 수행한다.
 - ACTIVE 상태에서는 Battery Voltage를 주기적으로 모니터링해야 한다.
 
 #### REQ-EPM-013
-- ACTIVE 상태에서는 수신된 CAN Message를 처리해야 한다.
+- 수신된 CAN Message를 처리해야 한다.
 
 #### REQ-EPM-014
-- ACTIVE 상태에서는 Internal Fault Flag를 주기적으로 확인해야 한다.
+- ACTIVE 및 LOW POWER 상태에서는  Fault 상태를 주기적으로 모니터링해야 한다.
 
 ---
 

@@ -25,6 +25,8 @@ class PowerManager {
 
         bool GetPeripheralPowerEnable() const;
         bool GetCameraPowerEnable() const;
+        float GetBatteryVoltage() const;
+        const char* GetPowerStateString() const;
         
     private:
         void Init();

@@ -37,7 +37,7 @@ void PowerManager::Update()
         isPeripheralPowerEnable = false;
         isCameraPowerEnable = false;
 
-        if (ignSignalOnOff)
+        if (ignSignalOnOff || isWakeupRequested)
         {
             currentState = PowerState::INIT;
         }
@@ -214,4 +214,41 @@ bool PowerManager::GetPeripheralPowerEnable() const
 bool PowerManager::GetCameraPowerEnable() const
 {
     return isCameraPowerEnable;
+}
+
+float PowerManager::GetBatteryVoltage() const
+{
+    return batVoltage;
+}
+
+// 전원 상태 문자열 반환
+const char *PowerManager::GetPowerStateString() const
+{
+    const char* curState = "UNKNOWN";
+
+    switch (currentState)
+    {
+    case PowerState::POWER_OFF:
+        curState = "POWER_OFF";
+        break;  
+    case PowerState::INIT:
+        curState = "INIT";
+        break;
+    case PowerState::ACTIVE:
+        curState = "ACTIVE";
+        break;      
+    case PowerState::LOW_POWER:
+        curState = "LOW_POWER";
+        break;
+    case PowerState::SLEEP:
+        curState = "SLEEP";
+        break;
+    case PowerState::FAULT:
+        curState = "FAULT";
+        break;
+    default:
+        curState = "UNKNOWN";
+        break;
+    }
+    return curState;
 }
