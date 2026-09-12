@@ -8,7 +8,8 @@ class PowerManager {
     public:
         PowerManager();
 
-        void Update();
+        void UpdateState();
+        void UpdateOutputs();
         
         void SetIgnSignal(bool on);
         void SetWakeupSignal(bool on);

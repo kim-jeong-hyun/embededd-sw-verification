@@ -66,7 +66,8 @@ int main()
     {
         SimulationInput(pm, tick);
 
-        pm.Update();
+        pm.UpdateState();
+        pm.UpdateOutputs();
 
         if (prevState != pm.GetPowerState())
         {

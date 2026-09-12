@@ -27,25 +27,19 @@ void PowerManager::Init()
 }
 
 // 상태 업데이트
-void PowerManager::Update()
+void PowerManager::UpdateState()
 {
     ProcessCanMessage(); // CAN 메시지 처리
 
     switch (currentState)
     {
     case PowerState::POWER_OFF:
-        isPeripheralPowerEnable = false;
-        isCameraPowerEnable = false;
-
         if (ignSignalOnOff || isWakeupRequested)
         {
             currentState = PowerState::INIT;
         }
         break;
     case PowerState::INIT:
-        isPeripheralPowerEnable = false;
-        isCameraPowerEnable = false;
-
         if (isInitFinished)
         {
             currentState = PowerState::ACTIVE;
@@ -53,9 +47,6 @@ void PowerManager::Update()
         }
         break;
     case PowerState::ACTIVE:
-        isPeripheralPowerEnable = true; // 주변 장치 전원 활성화
-        isCameraPowerEnable = true;     // 카메라 전원 활성화
-
         if (isBatteryFault || isCanTimeout || isInternalFault)
         {
             currentState = PowerState::FAULT;
@@ -71,9 +62,6 @@ void PowerManager::Update()
         }
         break;
     case PowerState::LOW_POWER:
-        isPeripheralPowerEnable = true;
-        isCameraPowerEnable = false;
-
         if (isBatteryFault || isCanTimeout || isInternalFault)
         {
             currentState = PowerState::FAULT;
@@ -84,9 +72,6 @@ void PowerManager::Update()
         }
         break;
     case PowerState::SLEEP:
-        isPeripheralPowerEnable = false;
-        isCameraPowerEnable = false;
-
         // GPIO, Wake Pin 등의 H/W Wake up 신호 감지 시 INIT 상태로 전환
         if (isWakeupRequested || ignSignalOnOff)
         {
@@ -110,6 +95,33 @@ void PowerManager::Update()
         isCameraPowerEnable = false;
         break;
     default:
+        break;
+    }
+}
+
+void PowerManager::UpdateOutputs()
+{
+    switch(currentState)
+    {
+    case PowerState::POWER_OFF:
+        isPeripheralPowerEnable = false;
+        isCameraPowerEnable = false;
+        break;
+
+    case PowerState::ACTIVE:
+        isPeripheralPowerEnable = true;
+        isCameraPowerEnable = true;
+        break;
+
+    case PowerState::LOW_POWER:
+        isPeripheralPowerEnable = true;
+        isCameraPowerEnable = false;
+        break;
+
+    case PowerState::SLEEP:
+    case PowerState::FAULT:
+        isPeripheralPowerEnable = false;
+        isCameraPowerEnable = false;
         break;
     }
 }
