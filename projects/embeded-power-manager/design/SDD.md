@@ -134,7 +134,7 @@
 
 ### 5.2 Function Description
 
-#### Init()
+#### SDD-EPM-001 : Init()
 
 | Item | Description |
 |------|-------------|
@@ -145,7 +145,7 @@
 
 ---
 
-#### UpdateState()
+#### SDD-EPM-002 : UpdateState()
 
 | Item | Description |
 |------|-------------|
@@ -156,7 +156,7 @@
 
 ---
 
-#### UpdateOutputs()
+#### SDD-EPM-003 : UpdateOutputs()
 
 | Item | Description |
 |------|-------------|
@@ -167,7 +167,7 @@
 
 ---
 
-#### SetIgnSignal()
+#### SDD-EPM-004 : SetIgnSignal()
 
 | Item | Description |
 |------|-------------|
@@ -178,7 +178,7 @@
 
 ---
 
-#### SetWakeupSignal()
+#### SDD-EPM-005 : SetWakeupSignal()
 
 | Item | Description |
 |------|-------------|
@@ -189,7 +189,7 @@
 
 ---
 
-#### SetBatteryVoltage()
+#### SDD-EPM-006 : SetBatteryVoltage()
 
 | Item | Description |
 |------|-------------|
@@ -200,7 +200,7 @@
 
 ---
 
-#### SetCanTimeout()
+#### SDD-EPM-007 : SetCanTimeout()
 
 | Item | Description |
 |------|-------------|
@@ -211,7 +211,7 @@
 
 ---
 
-#### RecvCanMessage()
+#### SDD-EPM-008 : RecvCanMessage()
 
 | Item | Description |
 |------|-------------|
@@ -222,7 +222,7 @@
 
 ---
 
-#### ProcessCanMessage()
+#### SDD-EPM-009 : ProcessCanMessage()
 
 | Item | Description |
 |------|-------------|
@@ -233,7 +233,7 @@
 
 ---
 
-#### SetInternalFault()
+#### SDD-EPM-010 : SetInternalFault()
 
 | Item | Description |
 |------|-------------|
@@ -244,7 +244,7 @@
 
 ---
 
-#### ClearFault()
+#### SDD-EPM-011 : ClearFault()
 
 | Item | Description |
 |------|-------------|
@@ -255,7 +255,7 @@
 
 ---
 
-#### GetPowerState()
+#### SDD-EPM-012 : GetPowerState()
 
 | Item | Description |
 |------|-------------|
@@ -266,7 +266,7 @@
 
 ---
 
-#### SetInitFinished()
+#### SDD-EPM-013 : SetInitFinished()
 
 | Item | Description |
 |------|-------------|
@@ -277,7 +277,7 @@
 
 ---
 
-#### GetPeripheralPowerEnable()
+#### SDD-EPM-014 : GetPeripheralPowerEnable()
 
 | Item | Description |
 |------|-------------|
@@ -288,7 +288,7 @@
 
 ---
 
-#### GetCameraPowerEnable()
+#### SDD-EPM-015 : GetCameraPowerEnable()
 
 | Item | Description |
 |------|-------------|
@@ -299,7 +299,7 @@
 
 ---
 
-#### GetBatteryVoltage()
+#### SDD-EPM-016 : GetBatteryVoltage()
 
 | Item | Description |
 |------|-------------|
@@ -310,7 +310,7 @@
 
 ---
 
-#### GetPowerStateString()
+#### SDD-EPM-017 : GetPowerStateString()
 
 | Item | Description |
 |------|-------------|
