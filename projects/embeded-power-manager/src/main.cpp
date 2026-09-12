@@ -7,6 +7,8 @@
 // 시뮬레이션 입력 함수
 void SimulationInput(PowerManager &pm, uint32_t tick)
 {
+    static float batVol = 12.0f;
+
     switch (tick)
     {
     case 10:
@@ -19,11 +21,11 @@ void SimulationInput(PowerManager &pm, uint32_t tick)
         break;
     case 100:
         // battrery low
-        pm.SetBatteryVoltage(10.8f);
+        batVol = 10.8f;
         break;
     case 200:
         // battery fault
-        pm.SetBatteryVoltage(9.9f);
+        batVol = 9.9f;
         break;
     case 300:
         // reset fault
@@ -32,6 +34,10 @@ void SimulationInput(PowerManager &pm, uint32_t tick)
     case 310:
         // Initialization complete
         pm.SetInitFinished(true);
+        break;
+    case 320:
+        // battery recovery
+        batVol = 12.2f;
         break;
     case 400:
         // IGN OFF
@@ -51,6 +57,9 @@ void SimulationInput(PowerManager &pm, uint32_t tick)
     default:
         break;
     }
+    
+    //매 Tick마다 배터리 전압 업데이트
+    pm.SetBatteryVoltage(batVol);
 }
 
 int main()
@@ -80,7 +89,7 @@ int main()
                 << std::endl;
             prevState = pm.GetPowerState();
         }
-        //메인 스레드 10ms 대기
+        // 메인 스레드 10ms 대기
         std::this_thread::sleep_for(std::chrono::milliseconds(10));
         tick++;
     }
