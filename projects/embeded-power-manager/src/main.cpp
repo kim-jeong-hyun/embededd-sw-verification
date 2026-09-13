@@ -39,6 +39,10 @@ void SimulationInput(PowerManager &pm, uint32_t tick)
         // battery recovery
         batVol = 12.2f;
         break;
+    case 350:
+        // reset fault
+        pm.RecvCanMessage(CanMessageId::RESET_FAULT);
+        break;
     case 400:
         // IGN OFF
         pm.SetIgnSignal(false);
@@ -47,18 +51,18 @@ void SimulationInput(PowerManager &pm, uint32_t tick)
         // Wakeup Signal ON
         pm.SetWakeupSignal(true);
         break;
-    case 3510:
-        // Wakeup Signal OFF
-        pm.SetWakeupSignal(false);
+    case 3600:
+        // IGN ON
+        pm.SetIgnSignal(true);
         break;
-    case 3520:
+    case 3720:
         pm.SetInitFinished(true);
         break;
     default:
         break;
     }
-    
-    //매 Tick마다 배터리 전압 업데이트
+
+    // 매 Tick마다 배터리 전압 업데이트
     pm.SetBatteryVoltage(batVol);
 }
 
