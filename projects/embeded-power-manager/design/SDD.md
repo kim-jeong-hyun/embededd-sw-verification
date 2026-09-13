@@ -163,7 +163,7 @@
 | Purpose | 현재 시스템 상태에 따라 출력 신호를 설정한다. |
 | Input | Current State |
 | Output | Peripheral Power Enable, Camera Power Enable |
-| Processing | 현재 상태에 따라 주변 장치 및 카메라 전원을 ON/OFF 한다. |
+| Processing | - Current State에 따라 Peripheral Power Enable을 설정한다.<br>- Current State에 따라 Camera Power Enable을 설정한다.<br>- POWER_OFF, SLEEP 및 FAULT 상태에서는 모든 출력 신호를 OFF한다.<br>- ACTIVE 상태에서는 모든 출력 신호를 ON한다.<br>- LOW_POWER 상태에서는 Peripheral Power는 ON, Camera Power는 OFF로 설정한다. |
 
 ---
 
