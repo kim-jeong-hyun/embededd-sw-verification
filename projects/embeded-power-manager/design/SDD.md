@@ -140,7 +140,7 @@
 |------|-------------|
 | Purpose | PowerManager를 초기 상태로 초기화한다. |
 | Input | None |
-| Output | None |
+| Output | Initial Power State |
 | Processing | 1. 상태 변수를 초기화한다.<br>2. 입력 변수를 초기화한다.<br>3. Fault Flag를 초기화한다.<br>4. 출력 변수를 초기화한다.<br>5. Timer를 초기화한다.<br>6. Current State를 POWER_OFF로 설정한다. |
 
 ---
@@ -152,7 +152,7 @@
 | Purpose | 현재 입력 조건을 평가하여 시스템 상태를 전이한다. |
 | Input | IGN Signal, Wake-up Signal, Battery Voltage, CAN Message, Fault Flag |
 | Output | Current State |
-| Processing | CAN 메시지를 처리한 후 현재 상태에 따라 상태 전이 조건을 평가하여 다음 상태를 결정한다. |
+| Processing | 1. CAN 메시지를 처리한다.<br>2. 현재 Power State를 확인한다.<br>3. 현재 상태에 따른 상태 전이 조건을 평가한다.<br>4. 조건을 만족하면 Current State를 변경한다.<br>5. 그렇지 않으면 Current State를 유지한다. |
 
 ---
 
