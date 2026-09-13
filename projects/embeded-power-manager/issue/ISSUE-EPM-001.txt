@@ -1,0 +1,14 @@
+Defect :
+INIT 상태에서 Fault 조건 확인 없이 ACTIVE로 전이됨
+
+Description :
+FAULT 상태에서 RESET_FAULT 명령을 수신하면 INIT으로 전이됨
+이후 Initialization Complete 조건만 만족하면 Fault 조건을 확인하지 않고 ACTIVE로 전이됨.
+그 결과 FAULT 상태가 유지되는 상황(배터리 전압은 10V 이하)에서 ACTIVE 잘못 진입하게 됨.
+다음 UpdateState에서 FAULT로 전이됨.
+
+Expected Result :
+INIT 상태에서 Initialization Complete 뿐 아니라 FAULT 조건이 모두 해제된 경우에 ACTIVE로 전이해야 한다.
+
+Severity : High
+

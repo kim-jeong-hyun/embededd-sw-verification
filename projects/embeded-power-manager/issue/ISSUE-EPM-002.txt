@@ -1,0 +1,14 @@
+Defect : 
+Battery Fault 해제 로직 없음
+
+Description :
+Battery Voltage가 Fault Threshold(10V) 미만이 되면
+Battery Fault true로 설정됨.
+하지만 정상 전압으로 회복되어도 Battery Fault를 해제하는 로직이 없음.
+따라서 Fault Reset 조건을 만족할 수 없음.
+
+Expected Result :
+Battery Voltage가 Fault Threshold 이상으로 회복되면
+Battery Fault는 false로 설정되어야함.
+
+Severity : High
