@@ -194,7 +194,6 @@ void PowerManager::SetInternalFault(bool fault)
 // 내부 진단 해제
 void PowerManager::ClearFault()
 {
-    isBatteryFault = false;
     isCanTimeout = false;
     isInternalFault = false;
 }
