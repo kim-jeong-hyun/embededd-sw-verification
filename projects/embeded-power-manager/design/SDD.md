@@ -141,12 +141,7 @@
 | Purpose | PowerManager를 초기 상태로 초기화한다. |
 | Input | None |
 | Output | None |
-| Processing | - 상태 변수를 초기화한다.
-<br>- 입력 변수를 초기화한다.
-<br>- Fault Flag를 초기화한다.
-<br>- 출력 변수를 초기화한다.
-<br>- Timer를 초기화한다.
-<br>- Current State를 POWER_OFF로 설정한다. |
+| Processing | 1. 상태 변수를 초기화한다.<br>2. 입력 변수를 초기화한다.<br>3. Fault Flag를 초기화한다.<br>4. 출력 변수를 초기화한다.<br>5. Timer를 초기화한다.<br>6. Current State를 POWER_OFF로 설정한다. |
 
 ---
 
