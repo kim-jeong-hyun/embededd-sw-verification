@@ -7,8 +7,17 @@ Battery Fault true로 설정됨.
 하지만 정상 전압으로 회복되어도 Battery Fault를 해제하는 로직이 없음.
 따라서 Fault Reset 조건을 만족할 수 없음.
 
+Reproduction :
+1. Battery Voltage = 9.9V
+2. Battery Fault 발생
+3. Battery Voltage = 12.0V
+4. Fault 상태 유지
+
 Expected Result :
 Battery Voltage가 Fault Threshold 이상으로 회복되면
 Battery Fault는 false로 설정되어야함.
+
+Actual Result :
+Battery Fault 해제 조건이 정의되어 있지 않음.
 
 Severity : High

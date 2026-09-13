@@ -7,8 +7,22 @@ FAULT 상태에서 RESET_FAULT 명령을 수신하면 INIT으로 전이됨
 그 결과 FAULT 상태가 유지되는 상황(배터리 전압은 10V 이하)에서 ACTIVE 잘못 진입하게 됨.
 다음 UpdateState에서 FAULT로 전이됨.
 
+Reproduction :
+1. Battery Voltage = 9.9V
+2. FAULT 상태 진입
+3. RESET_FAULT 메시지 수신
+4. INIT 상태 전이
+5. Initialization Complete = TRUE
+6. ACTIVE 상태 전이
+7. 다음 UpdateState()에서 다시 FAULT 상태 전이
+
 Expected Result :
 INIT 상태에서 Initialization Complete 뿐 아니라 FAULT 조건이 모두 해제된 경우에 ACTIVE로 전이해야 한다.
 
+Actual Result :
+Initialization Complete 조건만 확인하여 ACTIVE 상태로 전이한다.
+
 Severity : High
+
+
 

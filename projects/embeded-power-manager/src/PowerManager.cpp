@@ -40,7 +40,7 @@ void PowerManager::UpdateState()
         }
         break;
     case PowerState::INIT:
-        if (isInitFinished)
+        if (isInitFinished && !isBatteryFault && !isCanTimeout && !isInternalFault)
         {
             currentState = PowerState::ACTIVE;
             isInitFinished = false; // 초기화 완료 후 플래그 초기화
@@ -142,11 +142,7 @@ void PowerManager::SetWakeupSignal(bool on)
 void PowerManager::SetBatteryVoltage(float voltage)
 {
     batVoltage = voltage;
-
-    if(batVoltage < BATTERY_FAULT_THRESHOLD)
-    {
-        isBatteryFault = true;
-    }
+    isBatteryFault = (batVoltage < BATTERY_FAULT_THRESHOLD);
 }
 
 // CAN Timeout 설정
@@ -178,9 +174,8 @@ void PowerManager::ProcessCanMessage()
         break;
     case CanMessageId::RESET_FAULT:
         // Fault 조건 해제 시 INIT 상태로 전환
-        if (currentState == PowerState::FAULT)
+        if (currentState == PowerState::FAULT && !isBatteryFault && !isCanTimeout && !isInternalFault)
         {
-            ClearFault();
             currentState = PowerState::INIT;
         }
         break;
