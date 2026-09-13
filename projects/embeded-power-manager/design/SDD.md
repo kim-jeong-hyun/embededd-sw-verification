@@ -142,11 +142,11 @@
 | Input | None |
 | Output | None |
 | Processing | - 상태 변수를 초기화한다.
-- 입력 변수를 초기화한다.
-- Fault Flag를 초기화한다.
-- 출력 변수를 초기화한다.
-- Timer를 초기화한다.
-- Current State를 POWER_OFF로 설정한다. |
+<br>- 입력 변수를 초기화한다.
+<br>- Fault Flag를 초기화한다.
+<br>- 출력 변수를 초기화한다.
+<br>- Timer를 초기화한다.
+<br>- Current State를 POWER_OFF로 설정한다. |
 
 ---
 
