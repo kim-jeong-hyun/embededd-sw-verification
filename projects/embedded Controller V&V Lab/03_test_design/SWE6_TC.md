@@ -18,7 +18,7 @@
 
 | 필드 | 학습자 작성 내용 |
 |---|---|
-| TC ID | TC-IEC-001 |
+| TC ID | TC-SWR-IGN-001 |
 | TC 제목·목적 | IGN OFF → ON 시 PWR_REQ의 100 ms 이내 ENABLE 전환 및 유지 확인 |
 | 검증 수준 | SWE.6 |
 | 기준 문서 ID·버전 | SW-INPUT-001 v1.0 (SWE6_IGN_Requirements.md v1.0) |
